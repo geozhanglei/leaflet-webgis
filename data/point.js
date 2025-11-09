@@ -1,0 +1,41 @@
+var pointJson = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Ningbo Fantawild" },
+      geometry: {
+        coordinates: [121.17720883058854, 30.3246461655164],
+        type: "Point",
+      },
+      id: 0,
+    },
+    {
+      type: "Feature",
+      properties: { name: "Ninghai Tianmingmount，thermal fount" },
+      geometry: {
+        coordinates: [121.31841482584213, 29.37537214167743],
+        type: "Point",
+      },
+      id: 1,
+    },
+    {
+      type: "Feature",
+      properties: { name: "Shaoxing Luxun hometown" },
+      geometry: {
+        coordinates: [120.5831749238452, 30.002574289084876],
+        type: "Point",
+      },
+      id: 2,
+    },
+    {
+      type: "Feature",
+      properties: { name: "Lanting  Scenic Spot" },
+      geometry: {
+        coordinates: [120.49673201945097, 29.926515286419573],
+        type: "Point",
+      },
+      id: 3,
+    },
+  ],
+};
