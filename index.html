@@ -13,105 +13,14 @@
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <!-- 手写狂草风格（近似） -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap"
-      rel="stylesheet"
-    />
     <style>
       body {
         margin: 0;
         padding: 0;
       }
-      /* banner 主体与分割 */
-      .banner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 120px;
-        color: #013a3a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        font-weight: 700;
-        z-index: 1000;
-        background-image: linear-gradient(
-            rgba(255, 255, 255, 0.28),
-            rgba(255, 255, 255, 0.12)
-          ),
-          url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-      }
-      .banner .banner-content {
-        z-index: 1010;
-        font-family: "Zhi Mang Xing", "STXingkai", "KaiTi", serif;
-        font-size: 64px; /* 更大字体 */
-        letter-spacing: 0.14em; /* 字符间距更大，视觉更疏朗 */
-        color: #c68b2e; /* 暖金色，和风景图形成清新对比 */
-        padding: 0 12px;
-        line-height: 1;
-        background: none; /* 保持无底色 */
-        box-shadow: none;
-        backdrop-filter: none;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.22); /* 深色投影增强可读性 */
-      }
-      /* （已移除波形分割：保持原 banner 样式不变） */
-
-      /* 立体感分割条（不改 banner） */
-      .map-divider {
-        position: fixed;
-        top: 120px; /* 紧贴 banner 底部（banner 高度为 120px） */
-        left: 0;
-        width: 100%;
-        height: 6px; /* 分割条高度，可按需微调 */
-        z-index: 1001;
-        pointer-events: none;
-        /* 底色 + 轻微阴影，打造柔和立体感 */
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.95) 0%,
-          rgba(245, 250, 247, 0.95) 45%,
-          rgba(225, 235, 225, 1) 100%
-        );
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      }
-      /* 顶部高光与底部细线，增强分割层次 */
-      .map-divider::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 1px;
-        height: 4px;
-        background: linear-gradient(
-          180deg,
-          rgba(107, 109, 126, 0.9),
-          rgba(72, 63, 152, 0)
-        );
-        pointer-events: none;
-      }
-      .map-divider::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background: rgba(0, 0, 0, 0.06);
-        pointer-events: none;
-      }
-
-      /* 为 banner 留出空间 */
       #map {
         width: 100vw;
-        height: calc(100vh - 132px); /* 考虑分割条高度（120 + 12） */
-        margin-top: 132px;
+        height: 100vh;
       }
       .coordinate {
         position: absolute;
@@ -119,42 +28,23 @@
         right: 50%;
         background-color: antiquewhite;
       }
-      /* 已恢复 Leaflet 控件的默认视觉与位置（移除自定义浮层样式与偏移） */
-
       .leaflet-popup-content-wrapper {
         background-color: rgb(205, 214, 206);
         color: #dc3030;
         border: 1px solid #dc3030;
         border-radius: 10px;
       }
-      /* 已移除 map-separator 分割条 */
     </style>
+    script>
   </head>
-  <div></div>
+
   <body>
-    <!-- Banner -->
-    <header class="banner">
-      <div class="banner-content">泊孤舟•忆旧游</div>
-      <div class="banner-divider" aria-hidden="true">
-        <!-- 简洁的 SVG 波形分割，颜色使用半透明白以与背景柔和过渡 -->
-        <svg
-          viewBox="0 0 1440 100"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            d="M0,60 C240,10 360,10 720,60 C1080,110 1200,110 1440,60 L1440,100 L0,100 Z"
-            fill="rgba(255,255,255,0.92)"
-          />
-        </svg>
-      </div>
-    </header>
-    <!-- 立体感分割条：独立于 banner，视觉上位于 banner 与地图之间 -->
-    <div class="map-divider" aria-hidden="true"></div>
     <div id="map">
       <div class="leaflet-control coordinate"></div>
     </div>
+
+    //install omnivore
+    <script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
@@ -171,8 +61,8 @@
 
 <script>
   /* *********************************************
-                   Map initialization
-  ********************************************** */
+                     Map initialization
+    ********************************************** */
   // Map initialization
   var map = L.map("map").setView([30.25, 120.166664], 13);
   //   *********************************************
@@ -235,9 +125,10 @@
     subdomains: ["mt0", "mt1", "mt2", "mt3"],
   });
   //   googleSat.addTo(map);
+
   /* *********************************************
-                   marker
-  ********************************************** */
+                     marker
+    ********************************************** */
   //   L.marker([30.25, 120.166664]).addTo(map);
   var myIcon = L.icon({
     iconUrl: "img/red_marker.png",
@@ -277,9 +168,6 @@
       color: "#c0c0c0",
     },
   }).addTo(map);
-  /* *********************************************
-                   Layer controller
-  ********************************************** */
 
   var baseMaps = {
     OSM: osm,
@@ -302,8 +190,8 @@
 
   L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
   /* *********************************************
-                   Leaflet Event
-  ********************************************** */
+                     Leaflet Event
+    ********************************************** */
   map.on("mouseover", function () {
     console.log("Your Mouse is over the map!");
   });
@@ -313,4 +201,92 @@
       "lat:" + e.latlng.lat + " | " + "lng:" + e.latlng.lng;
     console.log("lat:" + e.latlng.lat + "lng:" + e.latlng.lng);
   });
+
+  /* *********************************************
+    Load GeoJSON, CSV, gpx, wkt, topojson file in Leaflet 
+    ********************************************** */
+  // Load GeoJsoN from an external file
+  //   var geojsonLayer = omnivore.geojson("./data/geojson/street.json").addTo(map);
+
+  //   //zoom into geojson layer
+  //   geojsonLayer.on("ready", function () {
+  //     map.fitBounds(geojsonLayer.getBounds());
+  //     //add popup
+  //     geojsonLayer.eachLayer(function (layer) {
+  //       layer.bindPopup("Name:" + layer.feature.properties.Name);
+  //     });
+  //   });
+  // load kml file
+  var kmlLayer = omnivore.kml("./data/kml/line.kml").addTo(map);
+  //add popup
+  kmlLayer.eachLayer(function (layer) {
+    layer.bindPopup("Name:" + layer.feature.properties.name);
+  });
+
+  // Robust styling for KML: handle vector paths and markers separately
+  kmlLayer.on("ready", function () {
+    kmlLayer.eachLayer(function (layer) {
+      // Vector features (lines/polygons) -> setStyle works
+      if (layer instanceof L.Path) {
+        layer.setStyle({
+          color: "red",
+          weight: 8,
+          opacity: 0.85,
+          fillOpacity: 0.4,
+        });
+        // keep / update popup if feature properties exist
+        if (
+          layer.feature &&
+          layer.feature.properties &&
+          layer.feature.properties.Name
+        ) {
+          layer.bindPopup("Name: " + layer.feature.properties.Name);
+        }
+      }
+      // Point features parsed as L.Marker -> setStyle DOES NOT work
+      else if (layer instanceof L.Marker) {
+        var latlng = layer.getLatLng();
+        var props = (layer.feature && layer.feature.properties) || {};
+        var popupContent = props.Name
+          ? "Name: " + props.Name
+          : layer.getPopup && layer.getPopup()
+          ? layer.getPopup().getContent()
+          : null;
+
+        // create a circleMarker so we can control style
+        var styledPoint = L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: "#e03e2d",
+          color: "#9b2a2a",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.9,
+        });
+        if (popupContent) styledPoint.bindPopup(popupContent);
+
+        // replace original marker with styled circleMarker in the same group
+        kmlLayer.removeLayer(layer);
+        kmlLayer.addLayer(styledPoint);
+      }
+    });
+
+    // zoom to layer and ensure popups bound
+    if (kmlLayer.getBounds && !kmlLayer.getBounds().isValid) {
+      // fallback: do nothing if no bounds
+    } else {
+      map.fitBounds(kmlLayer.getBounds());
+    }
+  });
+
+  //all methods of omnivore
+  //   var map = L.mapbox.map('map', 'mapbox.streets')
+  //     .setView([38, -102.0], 5);
+
+  // omnivore.csv('a.csv').addTo(map);
+  // omnivore.gpx('a.gpx').addTo(map);
+  // omnivore.kml('a.kml').addTo(map);
+  // omnivore.wkt('a.wkt').addTo(map);
+  // omnivore.topojson('a.topojson').addTo(map);
+  // omnivore.geojson('a.geojson').addTo(map);
+  // omnivore.polyline('a.txt').addTo(map);
 </script>
